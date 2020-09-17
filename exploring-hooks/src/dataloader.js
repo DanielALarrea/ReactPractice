@@ -7,15 +7,24 @@ export default function DataLoader() {
         fetch("http://localhost:3001/links")
         .then(response => response.json())
         .then(data => setData(data));
+
+        const socket = socketIOClient(ENDPOINT);
+        socket.on("FromAPI", data => {
+            setResponse(data);
+        });
+
+        return () => socket.disconnect();
     }, []);
 
-    return (
-        <div>
-            <ul>
-                {data.map(el => (
-                    <li key={el.id}>{el.title}</li>
-                ))}
-            </ul>
-        </div>
-    );
+    return props.render(data);
+
+    // return (
+    //     <div>
+    //         <ul>
+    //             {data.map(el => (
+    //                 <li key={el.id}>{el.title}</li>
+    //             ))}
+    //         </ul>
+    //     </div>
+    // );
 }

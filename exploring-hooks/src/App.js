@@ -25,14 +25,30 @@
 
 // export default App;
 
-import React, {useState} from "react";
+// import React, {useState} from "react";
 
-export default function Button() {
-    const [buttonText, setButtonText] = useState("Click me please");
+// export default function Button() {
+//     const [buttonText, setButtonText] = useState("Click me please");
 
-    return (
-        <button onClick={() => setButtonText("Thanks, been clicked!")}>
-            {buttonText}
-        </button>
-    );
+//     return (
+//         <button onClick={() => setButtonText("Thanks, been clicked!")}>
+//             {buttonText}
+//         </button>
+//     );
+// }
+
+import React from "react";
+import useFetch from "./useFetch";
+
+export default function DataLoader(props) {
+  const data = useFetch("http://localhost:3001/links");
+  return (
+    <div>
+      <ul>
+        {data.map(el => (
+          <li key={el.id}>{el.title}</li>
+        ))}
+      </ul>
+    </div>
+  )
 }
